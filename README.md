@@ -52,6 +52,7 @@ pip install faerun
 
 In OSX, brew install `llvm` and `libom`
 ```bash 
+brew install cmake
 brew install llvm
 brew install libomp
 ```
