@@ -81,8 +81,24 @@ class CMakeBuild(build_ext):
             cmake_args += ["-DOpenMP_CXX_FLAG=-fopenmp"]
             cmake_args += ["-DCMAKE_BUILD_TYPE=" + cfg]
 
+            # 1) Force clang from Homebrew (with OpenMP)
+            env["CC"] = "/opt/homebrew/opt/llvm/bin/clang"
+            env["CXX"] = "/opt/homebrew/opt/llvm/bin/clang++"
+            env["CPPFLAGS"] = "-I/opt/homebrew/opt/libomp/include " + env.get("CPPFLAGS", "")
+            env["LDFLAGS"] = "-L/opt/homebrew/opt/libomp/lib " + env.get("LDFLAGS", "")
+
+            # 2) Let TMAP’s CMakeLists find OGDF
+            env["LIBOGDF_INSTALL_PATH"] = os.path.join(os.path.split(__file__)[0],
+                                                       "ogdf-conda/src")
+
             # increase job count on OSX
             build_args += [f"-j{num_cores}"]
+            cmake_args += ["--trace-expand", "--debug-output"]
+            cmake_args += [
+                f"-DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang",
+                f"-DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++",
+            ]
+
         else:
             cmake_args += ["-DCMAKE_BUILD_TYPE=" + cfg]
 
@@ -92,11 +108,12 @@ class CMakeBuild(build_ext):
 
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)
+
         subprocess.check_call(
-            ["cmake", ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env
+            ["cmake", ext.sourcedir] + cmake_args,  env=env
         )
         subprocess.check_call(
-            ["cmake", "--build", "."] + build_args, cwd=self.build_temp
+            ["cmake", "--build", "."] + build_args,  env=env
         )
         print()  # Add an empty line for cleaner output
 

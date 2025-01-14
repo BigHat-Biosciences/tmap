@@ -47,3 +47,22 @@ We suggest using faerun to plot the data layed out by tmap. But you can of cours
 pip install faerun
 # pip install matplotlib
 ```
+
+## Build from source
+
+In OSX, brew install `llvm` and `libom`
+```bash 
+brew install llvm
+brew install libomp
+```
+
+Then `cd` to the `ogdf-conda` directory and run the following commands:
+```bash
+cmake .
+make -j12
+```
+
+Finally, pip install the package:
+```bash
+pip install .
+```
