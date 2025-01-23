@@ -80,3 +80,9 @@ python setup.py sdist bdist_wheel
 ```
 
 cf. https://bighatbio.atlassian.net/wiki/spaces/BB/pages/1268416519/Deploying+Custom+Python+Packages+to+CodeArtifact
+
+Linux
+
+https://github.com/reymond-group/tmap/issues/23
+
+
