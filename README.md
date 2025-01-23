@@ -57,13 +57,26 @@ brew install llvm
 brew install libomp
 ```
 
-Then `cd` to the `ogdf-conda` directory and run the following commands:
+Then `cd` to the `ogdf-conda/src` directory and run the following commands:
 ```bash
 cmake .
 make -j12
+```
+
+Libraries available for wheels:
+```mkdir lib
+cp lib* lib/.
 ```
 
 Finally, pip install the package:
 ```bash
 pip install .
 ```
+
+Or build distributables:
+```
+cd ../..
+python setup.py sdist bdist_wheel
+```
+
+cf. https://bighatbio.atlassian.net/wiki/spaces/BB/pages/1268416519/Deploying+Custom+Python+Packages+to+CodeArtifact
