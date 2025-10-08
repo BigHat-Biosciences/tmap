@@ -31,10 +31,10 @@ RUN apt-get update && apt-get install -y \
 RUN curl -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 ENV PATH="/root/.pyenv/shims:/root/.pyenv/bin:$PATH"
 
-# Install Python 3.12 using pyenv (matching CodeBuild Standard 7.0)
-ENV PYTHON_312_VERSION="3.12.11"
-RUN pyenv install $PYTHON_312_VERSION && \
-    pyenv global $PYTHON_312_VERSION && \
+# Install Python 3.9 using pyenv (matching CodeBuild Standard 7.0)
+ENV PYTHON_39_VERSION="3.9.23"
+RUN pyenv install $PYTHON_39_VERSION && \
+    pyenv global $PYTHON_39_VERSION && \
     pip3 install --no-cache-dir --upgrade pip && \
     pip3 install wheel setuptools
 
